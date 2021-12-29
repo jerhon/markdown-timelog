@@ -1,0 +1,6 @@
+bin
+obj
+.idea
+.vscode
+*.user
+*.drawio
