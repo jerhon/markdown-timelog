@@ -23,8 +23,8 @@ public class MarkdownTimeRecordRepository : ITimeRecordRepository {
 
         var dateMatch = date.ToString("yyyy-MM-dd");
         var files = Directory.EnumerateFiles(_options.RootDirectory, "*.md");
-        var matchingEntries = files.Where((f) => f.Contains(dateMatch));
-        var results = await Task.WhenAll(matchingEntries.Select(ParseRecordsFromFileAsync));
+        var matchingFiles = files.Where((f) => f.Contains(dateMatch));
+        var results = await Task.WhenAll(matchingFiles.Select(ParseRecordsFromFileAsync));
 
         return new TimeSheet(date, results.SelectMany((s) => s).ToArray());
     }

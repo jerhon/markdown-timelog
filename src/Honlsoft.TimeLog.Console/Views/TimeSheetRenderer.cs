@@ -5,9 +5,18 @@ using Spectre.Console.Rendering;
 
 namespace Honlsoft.TimeLog.Console.Views;
 
-public class TimeSheetRenderer {
+public class TimeSheetRenderer: IRenderer<TimeSheet> {
+    private readonly IAnsiConsole _console;
 
-    public Renderable Render(TimeSheet log) {
+    public TimeSheetRenderer(IAnsiConsole console) {
+        _console = console;
+    }
+
+    public void Render(TimeSheet report) {
+        if (report == null || report.Records.Length == 0) {
+            return;
+        }
+        
         var table = new Table();
         table.AddColumn("Start");
         table.AddColumn("End");
@@ -15,9 +24,10 @@ public class TimeSheetRenderer {
         table.AddColumn("Description", (tc) => {
              tc.Width = 40;
         });
-        foreach (var row in log.Records) {
+        foreach (var row in report.Records) {
             table.AddRow(row.StartTime.ToString(), row.EndTime?.ToString() ?? "", row.Task ?? "", row.Description ?? "");
         }
-        return table;
+        
+        _console.Write(table);
     }
 }

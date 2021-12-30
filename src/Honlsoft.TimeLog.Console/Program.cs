@@ -1,8 +1,12 @@
 ﻿using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Help;
+using System.CommandLine.Parsing;
 using Honlsoft.TimeLog.Console;
 using Honlsoft.TimeLog;
 using Honlsoft.TimeLog.Markdown;
 using Microsoft.Extensions.DependencyInjection;
+using Spectre.Console;
 
 // Setup the DI container
 ServiceCollection collection = new ServiceCollection();
@@ -24,5 +28,10 @@ foreach (var command in commands) {
 }
 
 
-// Execute the command from the command line.
-await rootCommand.InvokeAsync(args);
+// We'll add fancy figlet text to the root of the application
+var commandLine = new CommandLineBuilder(rootCommand)
+    .UseDefaults()
+    .UseHelp((ctx) => HelpBuilder.Default.GetLayout().Skip(1).Prepend(_ => Spectre.Console.AnsiConsole.Write(new FigletText("Honlsoft Time Log"))))
+    .Build();
+
+await commandLine.InvokeAsync(args);
