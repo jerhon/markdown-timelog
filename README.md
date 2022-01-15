@@ -3,6 +3,8 @@
 Takes a markdown file and parses out time entries from it.
 Formats them on the Command Line, and summarizes total time entry by task.
 
+This is not a general purpose time log watcher as the time logs are in a very specific format.
+
 ## Usage
 
 Time logs must be named in the following format: `YYYY-MM-DD-log.md` where `YYYY-MM-DD` is the date of the log, and log can be replaced with anything you like.  It must have the extension .md.
@@ -82,8 +84,14 @@ The same rules would apply.
 
 ## Development
 
+The console application is contained in the `Honlsoft.TimeLog.Console` directory to build and run.
+It is a typical dotnet console application.
+Either open sln in your preferred IDE, or use the dotnet console like `dotnet build` and `dotnet run` to run the application.
+
+### Project Layout
+
 The application uses a semi-Clean Architecture approach.
-The Domain and UseCases are in the main Honlsoft.TimeLog assembly and independent of most concrete technology.
+The Domain and UseCases are in the main Honlsoft.TimeLog assembly and independent of most concrete technology decisions.
 The Honlsoft.TimeLog.Console assembly contains the console application.
 The Honlsoft.TimeLog.Markdown assembly contains logic to interact with Markdown files as a form of persistence.
 
@@ -96,7 +104,27 @@ This can be referenced in [Program.cs](.\src\Honlsoft.TimeLog.Console\Program.cs
 
 In this way, the core logic can use the IoC container to get concrete implementations from layers such as the Markdown layer without explicitly knowing about it.
 
-![Component Diagram](.\docs\component-diagram.svg)
+```mermaid TD
+flowchart
+    console[Honlsoft.TimeLog.Console]
+    markdown[Honlsoft.TimeLog.Markdown]
+    domain[Honlsoft.TimeLog]
+
+    console -- Depends On --> domain;
+    console -- Depends On --> markdown;
+    markdown -- Depends On --> domain;
+```
+
+### ITimeSheetRepository Example
+
+For example in order to retrieve a timesheet, in the Domain, an interface is defined `ITimeSheetRepository` with a single call that will return a TimeSheet based on the date.
+
+This `ITimeSheetRepository` is used by the UseCases to retrieve a timesheet.
+However, an implementation is not made by the domain.
+That is implemented by a separate component that deals with reading a Markdown file and providing the time sheet associated with it.
+
+The UseCases always use the `ITimeSheetRepository` interface to retrieve a time sheet, and not a concrete implementation.  In this way, the domain can be decoupled from whatever persistence layer is used.
+Theoretically a database could be used to store the information, or it could be retrieved via a REST API.
 
 ## Use Cases
 
