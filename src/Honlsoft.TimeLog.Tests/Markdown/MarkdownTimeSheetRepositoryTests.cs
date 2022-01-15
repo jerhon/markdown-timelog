@@ -19,11 +19,11 @@ public class MarkdownTimeRecordRepositoryTests {
     }
 
     [Fact]
-    public async Task MarkdownTimeRecordRepository_LookupRecords_Success() {
+    public async Task MarkdownTimeSheetRepository_LookupRecords_Success() {
 
 
-        MarkdownTimeRecordRepository timeRecordRepository = new MarkdownTimeRecordRepository(_options, new TimeRecordSerializer());
-        var timeSheet = await timeRecordRepository.LookupTimeSheetAsync(DateOnly.Parse("2021-12-28"));
+        MarkdownTimeSheetRepository timeSheetRepository = new MarkdownTimeSheetRepository(_options, new TimeRecordSerializer());
+        var timeSheet = await timeSheetRepository.LookupTimeSheetAsync(DateOnly.Parse("2021-12-28"));
         timeSheet.Date.Should().Be(DateOnly.Parse("2021-12-28"));
         timeSheet.Records.Should().HaveCount(1);
 
@@ -37,9 +37,9 @@ public class MarkdownTimeRecordRepositoryTests {
     }
 
     [Fact]
-    public async Task MarkdownTimeRecordRepository_LookupRecords_MultipleEntries_Success() {
+    public async Task MarkdownTimeSheetRepository_LookupRecords_MultipleEntries_Success() {
 
-        var timeRecordRepository = new MarkdownTimeRecordRepository(_options, new TimeRecordSerializer());
+        var timeRecordRepository = new MarkdownTimeSheetRepository(_options, new TimeRecordSerializer());
         var timeSheet = await timeRecordRepository.LookupTimeSheetAsync(DateOnly.Parse("2021-12-29"));
         timeSheet.Records.Should().HaveCount(3);
 

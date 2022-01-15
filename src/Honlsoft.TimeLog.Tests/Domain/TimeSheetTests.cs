@@ -7,7 +7,7 @@ public class TimeLogTests {
 
 
     [Fact]
-    public void TimeLog_FillGaps_Success() {
+    public void TimeSheet_FillGaps_Success() {
 
         var record1 = new TimeEntry() {
             StartTime = new TimeOnly(4, 0, 0)

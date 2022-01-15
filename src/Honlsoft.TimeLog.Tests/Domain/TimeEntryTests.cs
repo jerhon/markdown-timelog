@@ -3,10 +3,10 @@ using Xunit;
 
 namespace Honlsoft.TimeLog.Domain;
 
-public class TimeRecordTests {
+public class TimeEntryTests {
 
     [Fact]
-    public void TimeRecord_CalculateDuration_Success() {
+    public void TimeEntry_CalculateDuration_Success() {
         TimeEntry entry = new TimeEntry() {
             StartTime = new TimeOnly(1, 0, 0),
             EndTime = new TimeOnly(5, 30, 0),
@@ -18,7 +18,7 @@ public class TimeRecordTests {
     }
 
     [Fact]
-    public void TimeRecord_CalculateDuration_NoEndTime_Returns0() {
+    public void TimeEntry_CalculateDuration_NoEndTime_Returns0() {
         TimeEntry entry = new TimeEntry() {
             StartTime = new TimeOnly(1, 0, 0),
         };

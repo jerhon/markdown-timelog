@@ -4,7 +4,7 @@ using Honlsoft.TimeLog.Domain;
 
 namespace Honlsoft.TimeLog.Markdown;
 
-public class MarkdownTimeRecordRepository : ITimeRecordRepository {
+public class MarkdownTimeSheetRepository : ITimeRecordRepository {
 
     private readonly IMarkdownParserOptions _options;
     private readonly TimeRecordSerializer _serializer;
@@ -14,7 +14,7 @@ public class MarkdownTimeRecordRepository : ITimeRecordRepository {
     /// Creates a markdown parser.
     /// </summary>
     /// <param name="options">The base options used to </param>
-    public MarkdownTimeRecordRepository(IMarkdownParserOptions options, TimeRecordSerializer serializer) {
+    public MarkdownTimeSheetRepository(IMarkdownParserOptions options, TimeRecordSerializer serializer) {
         _options = options;
         _serializer = serializer;
     }
