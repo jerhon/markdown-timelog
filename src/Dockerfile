@@ -10,11 +10,10 @@ RUN dotnet restore
 
 COPY . .
 
+RUN dotnet test
 
 WORKDIR /app/src/Honlsoft.TimeLog.Console
 RUN dotnet build -c Release -o /app/bin
-
-RUN dotnet test
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0
 COPY --from=build /app/bin /app/bin
