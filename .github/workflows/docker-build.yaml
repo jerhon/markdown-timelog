@@ -1,7 +1,8 @@
 name: Docker Build & Publish
 on:
   push:
-    branches: [ $default-branch ]
+    branches:
+      - 'main'
     tags:
       - 'v*'
 env:
@@ -30,6 +31,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./src
-          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
