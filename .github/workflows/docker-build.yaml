@@ -41,6 +41,5 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           context: ./src
-          push: ${{ == 'main'}}
           tags: ${{ env.REGISTRY }}:latest
           labels: ${{ steps.meta.outputs.labels }}
