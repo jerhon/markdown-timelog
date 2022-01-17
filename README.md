@@ -7,11 +7,21 @@ This is not a general purpose time log watcher as the time logs are in a very sp
 
 ## Usage
 
+### Docker
+
+The easiest way to run this is to use the [Docker](https://www.docker.com/) container.
+
+In a powershell command prompt, you can run the following command to get the latest version of the image from the github container registry.
+
+```
+docker run -it --rm -v ${PWD}:/app/logs ghcr.io/jerhon/markdown-timelog logs summary --date 2021-12-29
+```
+
+Everything after `markdown-timelog:main` are the arguments that are passed to the command.
+
+### Log Format
+
 Time logs must be named in the following format: `YYYY-MM-DD-log.md` where `YYYY-MM-DD` is the date of the log, and log can be replaced with anything you like.  It must have the extension .md.
-
-In the directory with the logs, run the command:
-
-```hs-time-log logs summary```
 
 Given there is a file with the current date, it will generate a summary of the time entries in the file like this:
 
@@ -80,7 +90,6 @@ The same rules would apply.
 │ 01:00:00 │ 99999 │ unidentified  │
 └──────────┴───────┴───────────────┘
 ```
-
 
 ## Development
 
