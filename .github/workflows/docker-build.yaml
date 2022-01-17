@@ -1,4 +1,4 @@
-name: Docker Build & Publish
+name: Docker Build & Publish to GitHub Container Registry
 on:
   push:
     branches:
@@ -26,11 +26,21 @@ jobs:
         uses: docker/metadata-action@v2
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      - name: Build and push Docker image
+      - name: Build and Push Versioned Docker Image
         id: build-and-push
         uses: docker/build-push-action@v2
+        if: ${{ github.ref != 'refs/heads/main' }}
         with:
           context: ./src
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and Push Latest Docker Image
+        id: build-and-push-latest
+        uses: docker/build-push-action@v2
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          context: ./src
+          push: ${{ == 'main'}}
+          tags: ${{ env.REGISTRY }}:latest
           labels: ${{ steps.meta.outputs.labels }}
