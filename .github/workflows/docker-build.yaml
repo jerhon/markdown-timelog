@@ -1,8 +1,12 @@
+# Main Workflow for Building & Publishing Github Containers to ghcr.io
 name: Docker Build & Publish to GitHub Container Registry
 on:
   push:
     branches:
+      # main will be the latest released version
       - 'main'
+      # anything under a build/ folder will be used as testing the build processes.
+      - 'build/*'
     tags:
       - 'v*'
 env:
@@ -42,5 +46,5 @@ jobs:
         with:
           context: ./src
           push: true
-          tags: ${{ env.REGISTRY }}:latest
+          tags: ${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
