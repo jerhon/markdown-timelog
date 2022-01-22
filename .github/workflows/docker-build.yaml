@@ -37,7 +37,7 @@ jobs:
         with:
           context: ./src
           push: true
-          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Build and Push Latest Docker Image
         id: build-and-push-latest
